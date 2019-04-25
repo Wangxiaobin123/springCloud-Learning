@@ -17,7 +17,6 @@
 
     <modules>
         <module>micro-spring-cloud-test</module>
-        <module>micro-spring-boot-service</module>
         <module>micro-spring-cloud-eureka-server</module>
         <module>micro-spring-cloud-feign-consumer</module>
         <module>micro-spring-cloud-ribbon-consumer</module>
@@ -28,21 +27,21 @@
         <java.version>1.8</java.version>
     </properties>
 
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-            </dependency>
-            <!--monitor interface info and so on-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-actuator</artifactId>
-            </dependency>
-        </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--monitor interface info and so on-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+    </dependencies>
 
 
 </project>

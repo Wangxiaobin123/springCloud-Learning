@@ -30,4 +30,3 @@ public class HelloController {
         return "hello world";
     }
 }
-
