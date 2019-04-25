@@ -4,20 +4,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>micro-spring-cloud-test</groupId>
-    <artifactId>micro-spring-cloud-test</artifactId>
+    <groupId>springCloud-Learning</groupId>
+    <artifactId>springCloud-Learning</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
-
-    <description>multi tests for springCloud project</description>
-    <name>Spring cloud test</name>
+    <packaging>pom</packaging>
 
     <parent>
-        <groupId>springCloud-Learning</groupId>
-        <artifactId>springCloud-Learning</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.0.RELEASE</version>
     </parent>
+
+    <modules>
+        <module>micro-spring-cloud-test</module>
+        <module>micro-spring-boot-service</module>
+        <module>micro-spring-cloud-eureka-server</module>
+        <module>micro-spring-cloud-feign-consumer</module>
+        <module>micro-spring-cloud-ribbon-consumer</module>
+    </modules>
 
     <properties>
         <java.version>1.8</java.version>
@@ -38,23 +42,5 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
 
 </project>
