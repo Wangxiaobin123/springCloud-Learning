@@ -21,6 +21,7 @@
         <module>micro-spring-cloud-eureka-server</module>
         <module>micro-spring-cloud-feign-consumer</module>
         <module>micro-spring-cloud-ribbon-consumer</module>
+        <module>micro-spring-cloud-zuul</module>
     </modules>
 
     <properties>
