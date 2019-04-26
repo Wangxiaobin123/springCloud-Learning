@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @FeignClient("service-api")
 public interface HelloService {
 
+    /**
+     * no params
+     *
+     * @return
+     */
     @GetMapping(value = "/hello")
     String hello();
 }

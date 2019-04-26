@@ -21,6 +21,7 @@
         <module>micro-spring-cloud-feign-consumer</module>
         <module>micro-spring-cloud-ribbon-consumer</module>
         <module>micro-spring-cloud-zuul</module>
+        <module>micro-spring-boot-query-service-api</module>
     </modules>
 
     <properties>

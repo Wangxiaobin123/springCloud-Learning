@@ -36,7 +36,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.6</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -48,6 +47,13 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>19.0</version>
+        </dependency>
+
+        <!--extends common params-->
+        <dependency>
+            <groupId>micro-spring-boot-query-service-api</groupId>
+            <artifactId>micro-spring-boot-query-service-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -78,5 +84,5 @@
         </plugins>
     </build>
 
-    
+
 </project>
