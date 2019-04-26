@@ -9,7 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>spring-boot-query-service</module>
-        <module>micro-spring-boot-query-service-api</module>
     </modules>
     <packaging>pom</packaging>
 
