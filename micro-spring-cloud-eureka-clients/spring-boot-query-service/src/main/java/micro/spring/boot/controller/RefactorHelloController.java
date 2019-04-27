@@ -30,8 +30,7 @@ public class RefactorHelloController implements HelloService {
      */
     @Override
     public User hello(String name, Integer age) {
-        User user = new User("shengbin", 27);
-        return user;
+        return new User(name, age);
     }
 
     /**
