@@ -1,5 +1,6 @@
 package micro.spring.boot.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import micro.spring.boot.query.dto.User;
 import micro.spring.boot.query.service.HelloService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since: 2019/4/26 下午1:36
  */
 @RestController
+@Slf4j
 public class RefactorHelloController implements HelloService {
     /**
      * trans for name of params
@@ -21,6 +23,7 @@ public class RefactorHelloController implements HelloService {
      */
     @Override
     public String hello(@RequestParam("name") String name) {
+        log.info("请求了...............");
         return "hell one param";
     }
 
