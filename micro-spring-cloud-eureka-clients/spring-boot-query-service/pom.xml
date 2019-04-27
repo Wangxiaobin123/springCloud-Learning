@@ -13,6 +13,7 @@
     <groupId>spring-boot-query-service</groupId>
     <artifactId>spring-boot-query-service</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <packaging>jar</packaging>
 
     <description>spring-boot-query-service</description>

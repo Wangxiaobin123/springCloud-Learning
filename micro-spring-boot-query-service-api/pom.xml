@@ -13,7 +13,7 @@
     <groupId>micro-spring-boot-query-service-api</groupId>
     <artifactId>micro-spring-boot-query-service-api</artifactId>
 
-
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
@@ -29,6 +29,8 @@
             <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
+
+
 
 
 </project>

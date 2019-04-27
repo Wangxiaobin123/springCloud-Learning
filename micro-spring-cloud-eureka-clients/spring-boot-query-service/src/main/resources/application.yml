@@ -1,0 +1,18 @@
+# port
+server:
+  port: 8080
+# env
+spring:
+  profiles:
+    active: idc
+  application:
+    name: service-api
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-1111:1111/eureka/,http://eureka-1112:1112/eureka/,http://eureka-1113:1113/eureka/
+
+
+
+
+
