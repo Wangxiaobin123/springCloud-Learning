@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <description>multi tests for springCloud project</description>
-    <name>Spring cloud test</name>
+    <name>Spring-cloud-test</name>
 
     <parent>
         <groupId>springCloud-Learning</groupId>
