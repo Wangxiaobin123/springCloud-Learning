@@ -1,10 +1,14 @@
 package micro.spring.boot.query.dto;
 
+import java.io.Serializable;
+
 /**
  * @Author: shengbin
  * @since: 2019/4/26 上午12:47
  */
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = -8493532688827901287L;
 
     private String name;
     private Integer age;
@@ -31,5 +35,13 @@ public class User {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

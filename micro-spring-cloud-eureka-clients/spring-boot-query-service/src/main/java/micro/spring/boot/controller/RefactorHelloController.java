@@ -2,6 +2,9 @@ package micro.spring.boot.controller;
 
 import micro.spring.boot.query.dto.User;
 import micro.spring.boot.query.service.HelloService;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -17,7 +20,7 @@ public class RefactorHelloController implements HelloService {
      * @return
      */
     @Override
-    public String hello(String name) {
+    public String hello(@RequestParam("name") String name) {
         return "hell one param";
     }
 
@@ -29,7 +32,7 @@ public class RefactorHelloController implements HelloService {
      * @return
      */
     @Override
-    public User hello(String name, Integer age) {
+    public User hello(@RequestHeader("name") String name, @RequestHeader("age") Integer age) {
         return new User(name, age);
     }
 
@@ -40,7 +43,7 @@ public class RefactorHelloController implements HelloService {
      * @return
      */
     @Override
-    public String hello(User user) {
-        return "trans object,get object`s params,name = "+user.getName()+",age = "+user.getAge();
+    public String hello(@RequestBody User user) {
+        return "name = " + user.getName() + ",age = " + user.getAge();
     }
 }
