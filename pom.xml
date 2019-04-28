@@ -33,6 +33,7 @@
         <module>micro-spring-cloud-turbine</module>
         <module>micro-spring-cloud-consul</module>
         <module>micro-spring-cloud-rabbitmq</module>
+        <module>micro-spring-cloud-turbine-amqp</module>
     </modules>
 
 
