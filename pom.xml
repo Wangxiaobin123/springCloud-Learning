@@ -30,11 +30,9 @@
         <module>micro-spring-cloud-zuul</module>
         <module>micro-spring-boot-query-service-api</module>
         <module>micro-spring-cloud-hystrix-dashboard</module>
+        <module>micro-spring-cloud-turbine</module>
     </modules>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
 
 
 </project>
