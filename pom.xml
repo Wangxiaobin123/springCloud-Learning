@@ -32,6 +32,7 @@
         <module>micro-spring-cloud-hystrix-dashboard</module>
         <module>micro-spring-cloud-turbine</module>
         <module>micro-spring-cloud-consul</module>
+        <module>micro-spring-cloud-rabbitmq</module>
     </modules>
 
 
