@@ -16,4 +16,5 @@ public class MicroSpringZuulMain {
     public static void main(String[] args) {
         SpringApplication.run(MicroSpringZuulMain.class, args);
     }
+
 }
