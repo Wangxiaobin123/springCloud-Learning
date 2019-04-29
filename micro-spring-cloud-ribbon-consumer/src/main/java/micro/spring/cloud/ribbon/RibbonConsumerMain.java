@@ -1,6 +1,7 @@
 package micro.spring.cloud.ribbon;
 
 
+import com.spring4all.swagger.EnableSwagger2Doc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -16,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
  * @Author: shengbin
  * @since: 2019/4/21 下午5:12
  */
+@EnableSwagger2Doc
 @EnableCircuitBreaker
 @EnableDiscoveryClient
 @SpringBootApplication
@@ -31,5 +33,6 @@ public class RibbonConsumerMain {
     public static void main(String[] args) {
         SpringApplication.run(RibbonConsumerMain.class, args);
     }
+
 }
 
