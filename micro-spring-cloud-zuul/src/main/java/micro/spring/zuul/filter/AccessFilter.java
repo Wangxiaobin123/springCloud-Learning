@@ -25,6 +25,12 @@ public class AccessFilter extends ZuulFilter {
         return 0;
     }
 
+    /**
+     * true: 执行run,filter 生效
+     * false: 不执行run
+     *
+     * @return
+     */
     @Override
     public boolean shouldFilter() {
         return true;
