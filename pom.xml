@@ -34,6 +34,7 @@
         <module>micro-spring-cloud-consul</module>
         <module>micro-spring-cloud-rabbitmq</module>
         <module>micro-spring-cloud-turbine-amqp</module>
+        <module>micro-zipkin-server</module>
     </modules>
 
 
