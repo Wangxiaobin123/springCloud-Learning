@@ -9,6 +9,7 @@ import zipkin2.server.internal.EnableZipkinServer;
  * @since: 2019/4/30 下午4:44
  */
 @EnableZipkinServer
+//@EnableZipkinStreamServer
 @SpringBootApplication
 public class MicroZipkinMain {
     public static void main(String[] args) {

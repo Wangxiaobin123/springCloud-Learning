@@ -35,8 +35,8 @@
         <module>micro-spring-cloud-rabbitmq</module>
         <module>micro-spring-cloud-turbine-amqp</module>
         <module>micro-zipkin-server</module>
+        <module>micro-zipkin-stream</module>
     </modules>
-
 
 
 </project>
