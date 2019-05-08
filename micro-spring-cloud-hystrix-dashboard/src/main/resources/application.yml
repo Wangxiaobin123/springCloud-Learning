@@ -3,3 +3,9 @@ server:
 spring:
   application:
     name: hystrix-dashboard
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-1111:1111/eureka/,http://eureka-1112:1112/eureka/,http://eureka-1113:1113/eureka/
+
