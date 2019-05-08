@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * modify default hystrix
+ *
  * @Author: shengbin
  * @since: 2019/4/27 下午11:08
  */
