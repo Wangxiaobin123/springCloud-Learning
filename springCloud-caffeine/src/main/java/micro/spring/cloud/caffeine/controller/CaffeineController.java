@@ -4,6 +4,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
+import micro.spring.cloud.caffeine.service.CacheService;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,8 @@ public class CaffeineController {
 
     @Autowired
     private Cache cache;
+    @Autowired
+    private CacheService cacheService;
 
     @GetMapping(value = "/getValueLoad")
     public void getValueFromCaffeineLoad(@RequestParam(value = "key") String key) {
@@ -151,12 +154,18 @@ public class CaffeineController {
         System.out.println(cache.getIfPresent(keyName));
     }
 
-    @GetMapping(value = "/teest")
+    @GetMapping(value = "/testGet")
     public void getTest(@RequestParam(value = "key") String keyName) {
-        Integer age1 = (Integer) cache.getIfPresent(keyName);
+        Object age1 = cache.get(keyName, value -> 0);
         System.out.println("value:" + age1);
 
         log.info("cache config :{}", cache.asMap());
+
+    }
+
+    @GetMapping(value = "/testPut")
+    public void putTest(@RequestParam(value = "key") String keyName, @RequestParam(value = "value") String valueName) {
+        cacheService.put(keyName, valueName);
 
     }
 

@@ -15,9 +15,9 @@ import java.util.concurrent.TimeUnit;
 public class CacheConfig {
 
     @Bean
-    public Cache<String, Object> cacheLoader() {
+    public Cache cacheLoader() {
         return Caffeine.newBuilder()
-                .expireAfterAccess(3, TimeUnit.SECONDS)
+                .expireAfterAccess(10, TimeUnit.SECONDS)
                 .maximumSize(5)
                 .removalListener(((key, value, cause) -> {
                     // 清理通知 key,value ==> 键值对   cause ==> 清理原因
@@ -25,4 +25,5 @@ public class CacheConfig {
                 }))
                 .build();
     }
+
 }
