@@ -4,6 +4,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,5 +72,45 @@ public class CaffeineController {
             return 18;
         });
         System.out.println(age2);
+    }
+
+    @GetMapping(value = "/getValueManualCount")
+    public void getValueFromCaffeineManualCount(@RequestParam(value = "key") String keyName) {
+        Cache<String, Integer> cache = Caffeine.newBuilder()
+                .expireAfterAccess(5, TimeUnit.SECONDS)
+                //最大容量1024个，超过会自动清理空间
+                .maximumSize(1024)
+//                .removalListener(((key, value, cause) -> {
+//                    // 清理通知 key,value ==> 键值对   cause ==> 清理原因
+//                    System.out.println("key = " + key + ",value = " + value + ",cause = " + cause);
+//                }))
+                .build();
+        Integer age1 = cache.getIfPresent(keyName);
+        System.out.println(age1);
+
+        for (int i = 0; i < 10; i++) {
+            @Nullable Integer count = cache.getIfPresent(i + "");
+            if (null == count) {
+                cache.put("" + i, 0);
+            }
+        }
+        log.info("cache1 :{}", cache.asMap());
+
+        for (int i = 4; i < 11; i++) {
+            @Nullable Integer count = cache.getIfPresent(i + "");
+            if (null == count) {
+                cache.put("" + i, 0);
+            } else {
+                // 当key不存在时，会立即创建出对象来返回，age2不会为空
+                Integer age2 = cache.get(i + "", k -> {
+                    System.out.println("默认值:" + k);
+                    return 0;
+                });
+                cache.put("" + i, age2 + 1);
+            }
+        }
+        log.info("cache2 :{}", cache.asMap());
+
+        System.out.println(cache.getIfPresent(keyName));
     }
 }
