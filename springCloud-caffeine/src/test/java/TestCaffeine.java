@@ -39,9 +39,10 @@ public class TestCaffeine {
                 //5分钟没有读写自动删除
                 .expireAfterAccess(5, TimeUnit.SECONDS)
                 //最大容量1024个，超过会自动清理空间
-                .maximumSize(1024)
+                .maximumSize(10)
                 .removalListener(((key, value, cause) -> {
-                    //清理通知 key,value ==> 键值对   cause ==> 清理原因
+                    // 清理通知 key,value ==> 键值对   cause ==> 清理原因
+                    System.out.println("key = "+key+",value = "+value+",cause = "+cause);
                 }))
                 .build();
 
@@ -90,9 +91,10 @@ public class TestCaffeine {
         // key 不存在时 会根据给定的CacheLoader自动装载进去
         Integer age2 = cache.get("张三");
         System.out.println(age2);
-        Integer age3 = cache.get("张三");
+        Integer age3 = cache.get("张");
         System.out.println(age3);
-        System.out.println("hit count:" + cache.stats().hitCount());
+        age3 = cache.get("王");
+        System.out.println(age3);
 
 
     }
