@@ -1,5 +1,6 @@
 package micro.spring.cloud.caffeine.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
@@ -167,6 +168,17 @@ public class CaffeineController {
     public void putTest(@RequestParam(value = "key") String keyName, @RequestParam(value = "value") String valueName) {
         cacheService.put(keyName, valueName);
 
+    }
+
+    @GetMapping(value = "/cacheStatus")
+    public JSONObject getCacheStatus() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("size", cache.asMap().size());
+        jsonObject.put("maxsize", cache.estimatedSize());
+        jsonObject.put("hitRate", cache.stats().hitRate());
+        jsonObject.put("totalLoadTime", cache.stats().totalLoadTime());
+        jsonObject.put("expireAfterAccess", cache.policy().expireAfterAccess());
+        return jsonObject;
     }
 
 }
