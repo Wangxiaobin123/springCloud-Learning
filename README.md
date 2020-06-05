@@ -4,3 +4,4 @@
 3. `mf-spring-cloud-feign-consumer`: feign消费模块
 4. `mf-spring-cloud-eureka`: eureka注册中心
 5. `mf-spring-boot-service`: rest service
+6. `springCloud-sharding-jdbc`: sharding-jdbc example
