@@ -32,6 +32,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * @author wangshengbin
+ */
 public class DataSourceUtil {
 
     private static final String URL_PREFIX = "jdbc:mysql://172.18.9.71:3306";
