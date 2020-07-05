@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * @Author: shengbin
  * @since: 2019/4/23 下午10:45
  */
-@RestController
+//@RestController
 public class HelloConsumerController {
 
     @Autowired

@@ -2,10 +2,10 @@ server:
   port: 2001
 spring:
   application:
-    name: hystrix-dashboard
+    name: mf-hystrix-dashboard
 
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka-1111:1111/eureka/,http://eureka-1112:1112/eureka/,http://eureka-1113:1113/eureka/
+      defaultZone: http://mf-cloud-registry-01:1111/eureka/,http://mf-cloud-registry-02:1111/eureka/,http://mf-cloud-registry-03:1111/eureka/
 
