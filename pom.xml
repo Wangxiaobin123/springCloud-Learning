@@ -38,6 +38,7 @@
         <module>micro-zipkin-stream</module>
         <module>springCloud-apollo</module>
         <module>springCloud-sharding-jdbc</module>
+        <module>springCloud-k8s</module>
     </modules>
 
 

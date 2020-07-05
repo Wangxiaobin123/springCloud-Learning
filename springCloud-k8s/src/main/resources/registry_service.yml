@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: shengbin-test112
+  name: svc-registry-deployment-01
+  annotations:
+    k8s.kuboard.cn/workload: svc-registry-deployment-01
+    k8s.kuboard.cn/displayName: 注册中心
+  labels:
+    k8s.kuboard.cn/layer: svc
+    k8s.kuboard.cn/name: svc-registry-deployment-01
+spec:
+  selector:
+    k8s.kuboard.cn/layer: svc
+    k8s.kuboard.cn/name: svc-registry-deployment-01
+  type: NodePort
+  ports:
+    - port: 1111
+      targetPort: 1111
+      protocol: TCP
+      name: edxyih
+      nodePort: 30008
