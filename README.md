@@ -5,3 +5,5 @@
 4. `mf-spring-cloud-eureka`: eureka注册中心
 5. `mf-spring-boot-service`: rest service
 6. `springCloud-sharding-jdbc`: sharding-jdbc example
+7. `springCloud-apollo`: 引入阿波罗配置中心
+8. `springCloud-k8s`: K8S API使用
