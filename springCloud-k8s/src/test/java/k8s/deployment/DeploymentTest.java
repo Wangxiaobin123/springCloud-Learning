@@ -9,7 +9,6 @@ import io.kubernetes.client.openapi.models.*;
 import io.kubernetes.client.util.ClientBuilder;
 import io.kubernetes.client.util.KubeConfig;
 import io.kubernetes.client.util.Yaml;
-import k8s.KubeConfigFileClientExample;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -298,14 +297,11 @@ public class DeploymentTest {
         }
         Configuration.setDefaultApiClient(client);
         V1Deployment deployment = new V1DeploymentBuilder()
-                .withApiVersion("apps/v1")
-                .withKind("Deployment")
+                .withApiVersion("machinelearning.seldon.io/v1")
+                .withKind("SeldonDeployment")
                 .withNewMetadata()
                     .withNamespace("shengbin-test112")
-                    .withName("svc-registry-deployment-01")
-                    .addToAnnotations("k8s.kuboard.cn/workload", "svc-registry-deployment-01")
-                    .addToAnnotations("k8s.kuboard.cn/displayName", "注册中心")
-                    .addToAnnotations("k8s.kuboard.cn/service", "NodePort")
+                    .withName("seldon-deployment-example-v9")
                     .addToAnnotations("k8s.kuboard.cn/ingress", "false")
                     .addToLabels("k8s.kuboard.cn/layer", "svc")
                     .addToLabels("k8s.kuboard.cn/name", "svc-registry-deployment-01")
