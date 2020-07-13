@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: shengbin-test112
+  name: svc-registry-deployment-01
+  annotations:
+    k8s.kuboard.cn/workload: svc-registry-deployment-01
+    k8s.kuboard.cn/displayName: 注册中心
+    k8s.kuboard.cn/ingress: 'false'
+    k8s.kuboard.cn/service: NodePort
+  labels:
+    k8s.kuboard.cn/layer: svc
+    k8s.kuboard.cn/name: svc-registry-deployment-01
+spec:
+  selector:
+    matchLabels:
+      k8s.kuboard.cn/layer: svc
+      k8s.kuboard.cn/name: svc-registry-deployment-01
+  revisionHistoryLimit: 10
+  template:
+    metadata:
+      labels:
+        k8s.kuboard.cn/layer: svc
+        k8s.kuboard.cn/name: svc-registry-deployment-01
+    spec:
+      securityContext:
+        seLinuxOptions: {}
+      imagePullSecrets: []
+      restartPolicy: Always
+      initContainers: []
+      containers:
+        - image: 'wang921217/mf-spring-cloud-registry:1.0'
+          imagePullPolicy: IfNotPresent
+          name: registry
+          volumeMounts:
+            - name: config
+              mountPath: /opt/app-root/src
+              mountPropagation: HostToContainer
+              readOnly: false
+          args:
+            - >-
+              --spring.profiles.active=pro2,--spring.config.location=/opt/app-root/src/application-pro2.properties
+          resources:
+            limits: {}
+            requests: {}
+          env: []
+          lifecycle: {}
+      volumes:
+        - name: config
+          nfs:
+            server: 172.24.7.167
+            path: /opt/nfs_file/
+      dnsPolicy: ClusterFirst
+      dnsConfig: {}
+      terminationGracePeriodSeconds: 30
+  progressDeadlineSeconds: 600
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  replicas: 1
