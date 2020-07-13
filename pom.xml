@@ -36,6 +36,9 @@
         <module>micro-spring-cloud-turbine-amqp</module>
         <module>micro-zipkin-server</module>
         <module>micro-zipkin-stream</module>
+        <module>springCloud-apollo</module>
+        <module>springCloud-sharding-jdbc</module>
+        <module>springCloud-k8s</module>
     </modules>
 
 

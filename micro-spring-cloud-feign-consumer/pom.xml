@@ -52,7 +52,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0</version>
+            <version>28.0-jre</version>
         </dependency>
         <!--extends common params-->
         <dependency>

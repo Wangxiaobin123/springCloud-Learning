@@ -1,5 +1,7 @@
 package micro.spring.cloud.ribbon.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.ObservableExecutionMode;
 import lombok.extern.slf4j.Slf4j;
 import micro.spring.cloud.ribbon.service.HelloService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +29,22 @@ public class RibbonConsumerController {
     @GetMapping(value = "/ribbon-consumer1")
     public String helloConsumer1() {
         return helloService.HelloService();
+    }
+
+    @GetMapping(value = "/test")
+    public String testSyn() {
+        try {
+            System.out.println("==================");
+            return getString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "0k";
+    }
+
+    @HystrixCommand(observableExecutionMode = ObservableExecutionMode.LAZY)
+    private String getString() throws InterruptedException {
+        Thread.sleep(3000);
+        return "AA";
     }
 }
