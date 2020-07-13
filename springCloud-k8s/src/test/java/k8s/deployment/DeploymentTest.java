@@ -315,7 +315,7 @@ public class DeploymentTest {
                 .withNewTemplate()
                     .withNewMetadata()
                         .addToLabels("k8s.kuboard.cn/layer", "svc")
-                        .addToLabels("k8s.kuboard.cn/name", "svc-registry-deployment")
+                        .addToLabels("k8s.kuboard.cn/name", "svc-registry-deployment-01")
                     .endMetadata()
                     .withNewSpec()
                         .withNewSecurityContext()
