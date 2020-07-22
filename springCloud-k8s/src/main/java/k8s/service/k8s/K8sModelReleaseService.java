@@ -10,6 +10,7 @@ import io.fabric8.kubernetes.client.Watch;
 import io.fabric8.kubernetes.client.dsl.MixedOperation;
 import io.fabric8.kubernetes.client.dsl.NonNamespaceOperation;
 import io.fabric8.kubernetes.client.dsl.RollableScalableResource;
+import io.fabric8.kubernetes.client.internal.readiness.Readiness;
 import io.fabric8.kubernetes.internal.KubernetesDeserializer;
 import k8s.domain.CustomResourceImpl;
 import org.slf4j.Logger;
@@ -20,6 +21,9 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author: wangshengbin
@@ -59,7 +63,7 @@ public class K8sModelReleaseService {
         if (StrUtil.isEmpty(objectName)) {
             return -1;
         }
-        int code = 0;
+        final int[] code = {0};
         try {
             CustomResourceDefinition crd = getCrd();
             // Registers a Custom Resource Definition Kind
@@ -72,11 +76,42 @@ public class K8sModelReleaseService {
             watcherService.waitForLatch(deleteLatch, "Failed to watch for and delete " + objectName);
             watch.close();
             watcherService.waitForLatch(closeLatch, "Failure in watch");
+
+
+            CountDownLatch latch = new CountDownLatch(1);
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+
+            MixedOperation<Deployment, DeploymentList, DoneableDeployment, RollableScalableResource<Deployment, DoneableDeployment>> deployments = kubernetesClient.apps().deployments();
+            NonNamespaceOperation<Deployment, DeploymentList, DoneableDeployment, RollableScalableResource<Deployment, DoneableDeployment>> seldon = deployments.inNamespace(namespace);
+            DeploymentList list = seldon.list();
+            for (Deployment deployment : list.getItems()) {
+                if (objectName.equals(deployment.getMetadata().getLabels().getOrDefault("seldon-deployment-id", null))) {
+
+                    executorService.submit(() -> {
+                        while (true) {
+                            if (Readiness.isReady(deployment)) {
+                                code[0] = 0;
+                                break;
+                            } else {
+                                code[0] = -1;
+                            }
+                        }
+                    });
+
+                }
+            }
+            try {
+                latch.await(5, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                latch.countDown();
+            }
         } catch (Exception e) {
             LOGGER.error("Error releaseModel:", e);
-            code = -1;
+            code[0] = -1;
         }
-        return code;
+        return code[0];
     }
 
     /**
