@@ -31,6 +31,9 @@ public class Fabric8ApiTest {
 
         KubernetesClient client = InitClientTest.getClient();
 
+
+        client.apps().deployments().inNamespace("visualdl-view").createOrReplace();
+
         fileReader = new FileReader(seldonConfigPath);
         RawCustomResourceOperationsImpl rawCustomResourceOperations = client.customResource(seldonCrdCxt());
         rawCustomResourceOperations.createOrReplace(fileReader.getInputStream());
