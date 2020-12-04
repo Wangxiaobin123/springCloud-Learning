@@ -39,6 +39,7 @@
         <module>springCloud-apollo</module>
         <module>springCloud-sharding-jdbc</module>
         <module>springCloud-k8s</module>
+        <module>flink-Learning</module>
     </modules>
 
 
