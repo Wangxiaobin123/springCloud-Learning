@@ -38,7 +38,7 @@
         <dependency>
             <groupId>io.kubernetes</groupId>
             <artifactId>client-java</artifactId>
-            <version>8.0.2</version>
+            <version>9.0.2</version>
         </dependency>
         <!--kubernetes-client 中包括了 对应版本的kubernetes-model依赖 -->
         <!-- https://mvnrepository.com/artifact/io.fabric8/kubernetes-client -->
