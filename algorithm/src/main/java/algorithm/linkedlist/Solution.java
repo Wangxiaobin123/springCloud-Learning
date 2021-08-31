@@ -1,8 +1,5 @@
 package algorithm.linkedlist;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static algorithm.linkedlist.LruTest.initArray;
 
 
@@ -23,6 +20,13 @@ public class Solution {
         int[] result = LRU(value, 3);
         System.out.println(result[0] + "----->" + result[1]);
 
+        DoubleList doubleList = new DoubleList();
+        doubleList.addLast(new Node(1, 1));
+        doubleList.addLast(new Node(2, 2));
+        doubleList.remove(new Node(3, 3));
+        Node node = doubleList.removeFirst();
+        System.out.println(node.val);
+
     }
 
     /**
@@ -39,7 +43,6 @@ public class Solution {
      * @return int整型一维数组
      */
     public static int[] LRU(int[][] operators, int k) {
-        LRUCache lruCache = new LRUCache(k);
         int resultLength = 0;
         for (int[] opr : operators) {
             if (opr[0] == 2) {
@@ -48,64 +51,72 @@ public class Solution {
         }
         int[] result = new int[resultLength];
         resultLength = 0;
-        int val;
+        LruCache lruCache = new LruCache(k);
         for (int[] opr : operators) {
             switch (opr[0]) {
                 case 1:
-                    lruCache.set(opr[1], opr[2]);
+                    lruCache.put(opr[1], opr[2]);
                     break;
                 case 2:
-                    val = lruCache.get(opr[1]);
+                    int val = lruCache.get(opr[1]);
                     result[resultLength++] = val;
                     break;
                 default:
                     break;
             }
         }
+
         return result;
     }
-
 }
 
+/**
+ * 链表的结构
+ */
 class Node {
     public int key;
     public int val;
     public Node pre;
     public Node next;
 
-    Node(int k, int v) {
+    public Node(int k, int v) {
         this.key = k;
         this.val = v;
     }
 }
 
 class DoubleList {
-    public Node head, tail;
+    public Node head;
+    public Node tail;
     public int size;
+    // 初始化双向链表
 
     public DoubleList() {
+        this.size = 0;
         head = new Node(0, 0);
-        tail = new Node(-1, -1);
+        tail = new Node(0, 0);
         head.next = tail;
         tail.pre = head;
-        size = 0;
     }
 
     // 在链表尾部添加节点 x，时间 O(1)
     public void addLast(Node x) {
-        x.pre = tail.pre;
-        x.next = tail;
-        tail.pre.next = x;
-        tail.pre = x;
-        size++;
+        if (x != null) {
+            tail.pre.next = x;
+            x.pre = tail.pre;
+            x.next = tail;
+            tail.pre = x;
+            size++;
+        }
     }
 
-    // 删除链表中的 x 节点（x 一定存在）
     // 由于是双链表且给的是目标 Node 节点，时间 O(1)
     public void remove(Node x) {
-        x.pre.next = x.next;
-        x.next.pre = x.pre;
-        size--;
+        if (x != null && x.next != null) {
+            x.pre.next = x.next;
+            x.next.pre = x.pre;
+            size--;
+        }
     }
 
     // 删除链表中第一个节点，并返回该节点，时间 O(1)
@@ -113,34 +124,33 @@ class DoubleList {
         if (head.next == tail) {
             return null;
         }
-        Node firstNode = head.next;
-        remove(firstNode);
-        return firstNode;
+        Node first = head.next;
+        remove(first);
+        return first;
     }
 
     // 返回链表长度，时间 O(1)
-    public int size() {
+    public int getSize() {
         return size;
     }
 }
-class LRUCache{
-    // key -> Node(key, val)
-    public Map<Integer, Node> map;
-    // Node(k1, v1) <-> Node(k2, v2)...
-    public DoubleList cache;
-    public int capa;
 
-    public LRUCache(int capa) {
-        this.map = new HashMap<Integer, Node>();
-        this.cache = new DoubleList();
-        this.capa = capa;
+class LruCache {
+    public Node[] hashNode;
+    public DoubleList cache;
+    public int size;
+
+    public LruCache(int cap) {
+        this.size = cap;
+        cache = new DoubleList();
+        hashNode = new Node[cap];
     }
 
-
     /* 将某个 key 提升为最近使用的 */
-    public void makeRecently(Integer key) {
-        Node node = map.get(key);
-        if (node != null) {
+    public void makeKeyRecently(int key) {
+        int index = getIndex(key);
+        if (hashNode[index] != null) {
+            Node node = hashNode[index];
             cache.remove(node);
             cache.addLast(node);
         }
@@ -148,48 +158,70 @@ class LRUCache{
 
     /* 添加最近使用的元素 */
     public void addRecently(int key, int val) {
+        if (size == cache.getSize()) {
+            deleteLastRecently();
+        }
         Node node = new Node(key, val);
         cache.addLast(node);
-        map.put(key, node);
+        int index = getIndex(key);
+        hashNode[index] = node;
+
     }
 
     /* 删除某一个 key */
-    public void deleteKey(Integer key) {
-        Node node = map.get(key);
-        if (node != null) {
-            cache.remove(node);
-            map.remove(key);
+    public void deleteKey(int key) {
+        int index = getIndex(key);
+        if (hashNode[index] != null) {
+            cache.remove(hashNode[index]);
+            hashNode[index] = null;
         }
     }
 
     /* 删除最久未使用的元素 */
-    public void removeLeastRecently() {
-        // 离链表尾部最近的节点是最近使用的，离链表头部最近的是最久未使用的
+    public void deleteLastRecently() {
         Node node = cache.removeFirst();
-        if (node != null) {
-            map.remove(node.key);
+        int index = getIndex(node.key);
+        if (hashNode[index] != null) {
+            hashNode[index] = null;
         }
+
     }
 
-    public int get(Integer key) {
-        if (!map.containsKey(key)) {
-            return -1;
+    public int get(int key) {
+        int index = getIndex(key);
+        if (hashNode[index] != null) {
+            Node node = hashNode[index];
+            makeKeyRecently(key);
+            if (size == cache.size) {
+                if (cache.head.next != null) {
+                    hashNode[getIndex(cache.head.next.key)] = null;
+                }
+            }
+            return node.key != key ? -1 : node.val;
         }
-        makeRecently(key);
-        return map.get(key).val;
+        return -1;
     }
 
-    public void set(Integer key, Integer val) {
-        // 缓存存在
-        if (map.containsKey(key)) {
+    public void put(int key, int val) {
+        int index = getIndex(key);
+        if (hashNode[index] != null) {
             deleteKey(key);
             addRecently(key, val);
             return;
         }
-        if (capa == cache.size()) {
-            removeLeastRecently();
+
+        if (size == cache.size) {
+            deleteLastRecently();
         }
-        // 缓存不存在
         addRecently(key, val);
+
     }
+
+    public int getIndex(int key) {
+        return (key < 0 ? (key == Integer.MIN_VALUE ? 0 : -key) : key) % hashNode.length;
+    }
+
 }
+
+
+

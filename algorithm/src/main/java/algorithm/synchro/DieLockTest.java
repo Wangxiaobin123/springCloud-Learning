@@ -38,6 +38,7 @@ public class DieLockTest {
 
         a1.start();
         b1.start();
+
     }
 
 }
