@@ -41,6 +41,7 @@
         <module>springCloud-k8s</module>
         <module>flink-Learning</module>
         <module>lua-test</module>
+        <module>jenkins-test</module>
     </modules>
 
 
