@@ -68,13 +68,13 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.49</version>
+            <version>1.2.83</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.56</version>
+            <version>1.2.83</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
