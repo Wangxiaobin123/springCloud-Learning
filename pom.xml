@@ -42,6 +42,7 @@
         <module>flink-Learning</module>
         <module>lua-test</module>
         <module>jenkins-test</module>
+        <module>HanNlp-test</module>
     </modules>
 
 
