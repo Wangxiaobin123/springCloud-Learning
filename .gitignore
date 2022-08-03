@@ -32,3 +32,4 @@ bin
 .tlog
 .st
 .idea/workspace.xml
+HanNlp-test/src/main/resources/data
