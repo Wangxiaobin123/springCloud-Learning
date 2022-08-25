@@ -1,6 +1,5 @@
 package cn.lubin;
 
-import cn.hutool.core.io.FileUtil;
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.algorithm.MaxHeap;
 import com.hankcs.hanlp.dictionary.stopword.CoreStopWordDictionary;
@@ -40,8 +39,6 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.junit.Test;
 import org.springframework.util.ObjectUtils;
 
-import java.io.File;
-import java.nio.charset.Charset;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -61,34 +58,13 @@ public class HanNlpTests {
     @Test
     public void demo() {
         TfIdfCounter tfIdfCounter = new TfIdfCounter();
-        StringBuilder c = new StringBuilder("近日，中国企业评价协会发布了“2021年中国新经济企业500强”榜单。本次评选标准严格遵守《中国新经济企业评价准则》（T/CEEAS 001-2021），以“科技创新主体”为主题，重点考察了受评企业的科技创新能力。换言之，能够入榜的企业无一不是各自领域的科技创新佼佼者。\n" +
-                "        整体来看，2021年新经济500强企业在激烈的市场竞争下，较去年榜单淘汰率超过三分之一。但在汽车行业，造车新势力代表企业蔚来汽车、威马汽车、小鹏汽车、理想汽车均连续两年榜上有名，与传统车企形成了四四平分的局面。似乎正对应了舆论已久“新老势力PK”说法。那么，作为此次评选重点的科技创新领域，新势力们究竟“新”在何处？\n" +
-                "        汽车智能化成为行业风向\n" +
-                "        当下，在新一代信息和通信、移动互联网、大数据、人工智能等为特征的第四次工业革命的影响下，万物互联时代正在到来。智能化将显著降低工业体系产销之间的信息不对称，加速两者之间的相互联系和反馈，催生出消费者驱动的商业模式。与此同时，经过多年发展，汽车行业的电动化水平已近触顶，车企之间同质化严重。比亚迪董事长王传福、威马创始人沈晖等汽车业内人士曾不只一次表达“新能源汽车的上半场是电动化，下半场是智能化”。\n" +
-                "        哨声已经吹响，对比传统造车企业，新势力们往往没有太大的“包袱”，这使得他们在新技术的运用、新方向的开发上走得更为激进，为我国冲破国外传统车企的技术壁垒，走出自己的汽车工业发展路线贡献了巨大力量。智能架构、智能驾驶、智能座舱作为支撑汽车智能化体验的三大支点，成为车企们的角力焦点。\n" +
-                "        汽车智能化的底座的诞生\n" +
-                "        万丈高楼平地起，没有电子电器架构这一底座作支撑，汽车智能化技术纵使再先进，也只是空中楼阁。传统燃油车设计的核心理念在于满足基础驾驶体验，零部件都是单独控制，各自为政——“硬件功能归硬件，软件功能归软件”，单一指令只对应单一功能，因此车辆缺少除基础驾驶外的扩展功能。孤立的软硬件功能，过低的信息传输速度使得智能驾驶、车载语音等需要多模块协同与高即时反应速率的前沿科技难以应用。\n" +
-                "        直到2007年，业内才由德尔福首次提出汽车电子电气架构(EEA, Electrical/Electronic Architecture)概念，它将传感器、ECU、线束、电子电气分配系统整合，重新设计和优化电子控制的软硬件进行系统，以实现汽车整体的配置和功能的实现，从根本上解决了汽车电子系统的通信和效率问题。演变到如今的智能电动汽车时代，EEA的追求已不再是纯粹的机械集成和软件加入，而是将零部件融合贯通，以电子化和智能化满足用户的个性化需求。\n" +
-                "        蔚来的ICC、小鹏的X-EEA 3.0、理想的EEA、威马的EEA4.0电子电器架构，区别于传统车企单纯服务于汽车机械功能的思维，专为智能化体验打造，将整车分为中央控制域控制器、自动驾驶域控制器、智能座舱域控制器，使得整车电子电器布局能同时实现高模块化度与高集成度，具备了多模块协同工作，以及植入超高带宽模块的物理条件。正基于此，造车四小龙“蔚小理威”不仅仅实现了底盘舒适性、操控性、驾驶性的全面优化，还做到了在辅助驾驶系统、智能语音控制、智能场景等方面的快速开发和迭代。\n" +
-                "        “激光雷达+单车算力”智能驾驶纷纷落地\n" +
-                "        智能架构是基础，而智能驾驶则是消费者们感知最为强烈，也是技术难度最高的领域。\n" +
-                "        在此方面，蔚来NOP、小鹏NGP、理想NOA、威马NLP智能驾驶系统走在了时代前沿。特斯拉选择了“纯视觉+云计算”路线，基于其庞大的用户体量实现了大量的数据积累，实现了低成本的自动驾驶；“蔚小理威”则选择了 “激光雷达+单车算力”方案。\n" +
-                "        在“多枚激光雷达方案+超级算力”的打法下，“蔚小理威”麾下智能驾驶产品纷纷落地。如小鹏NGP跨过了城际高速路场景阶段，开启城市复杂道路的内测阶段，何小鹏亲自体验点赞。威马W6通过AVP技术实现了无人自主泊车功能。\n" +
-                "        智能座舱是车企对生活的理解\n" +
-                "        当下汽车已经从简单的交通工具演变为智能终端，成为人们介于家庭与工作之间的“第三生活空间”。\n" +
-                "        由于EEA架构为智能座舱技术的落地提供了保障，“蔚小理威“在智能座舱的优化交互、增强科技、以及丰富场景联动方面相比于传统车企和其他新势力拉开了差距。\n" +
-                "        像是理想L9，该车在座舱内搭载了5块可以交互和联动的屏幕，包括HUD+方向盘仪表、中控副驾双联屏和一块15.7英寸的OLED娱乐屏，对于五屏的联动，理想方面认为可以给消费者带来极致的视听和娱乐体验。\n" +
-                "        而小鹏汽车方面反对在车内布局太多屏幕，对于智能座舱有着自己的理解。何小鹏的得意之作小鹏P5，奢侈地搭载了45英寸的投影幕布，可以在车内实现影音娱乐功能。\n" +
-                "        蔚来汽车在车内布局了时下流行的AR/VR等技术，为消费者提供影院级的视听享受。居于其仪表台正中的NOMI更是以可爱的形象博得了消费者的广泛喜爱。\n" +
-                "        威马汽车创始人沈晖认为，智能汽车不仅是硬件和车辆的互联、更要实现车内各模块之间的互通，基于用户的生活场景而推出人性化的解决方案。\n" +
-                "        智能汽车的未来，我们仍然看好“造车四小龙”\n" +
-                "        从涉及汽车智能化体验的智能架构、智能驾驶、智能座舱三个方面来看，“蔚小理威”都走在了时代的最前沿。此次“造车四小龙”联袂二进榜，反应了其在科技创新领域的领先成就。笔者认为，我们有理由期待他们在未来更进一步，为消费者带来更为卓越的智能化体验。");
-        List<String> keywords = tfIdfCounter.getKeywords(c.toString(), 50);
-        List<String> strings = FileUtil.readLines(new File("/Users/wangshengbin/Desktop/inputting_utf-8.txt"), Charset.defaultCharset());
-        c = new StringBuilder();
-        for (String t : strings) {
-            c.append(t);
-        }
+        StringBuilder c = new StringBuilder("<p");
+        // List<String> keywords = tfIdfCounter.getKeywords(c.toString(), 50);
+        // List<String> strings = FileUtil.readLines(new File("/Users/wangshengbin/Desktop/inputting_utf-8.txt"), Charset.defaultCharset());
+//        c = new StringBuilder();
+//        for (String t : strings) {
+//            c.append(t);
+//        }
 
         List<Term> segment = HanLP.segment(c.toString());
         List<Term> apply = CoreStopWordDictionary.apply(segment);
@@ -102,17 +78,14 @@ public class HanNlpTests {
                 t.add(term);
             }
         }
-        List<String> list = tfIdfCounter.getKeywords(t, 50);
+        List<Map.Entry<String, Double>> list = tfIdfCounter.getKeywordsWithTfIdf(t, 50);
         System.out.println(list);
-
-        tfIdfCounter.add(t);
         System.out.println(demoTextRank("", c.toString()));
-        System.out.println(tfIdfCounter.documents());
     }
 
     @Test
     public void demoStand() {
-        List<Term> termList = StandardTokenizer.segment("首先没有你好 商品和服务");
+        List<Term> termList = StandardTokenizer.segment("-->");
         System.out.println(termList);
     }
 
@@ -191,6 +164,7 @@ public class HanNlpTests {
 
     /**
      * textRank
+     *
      * @param url
      * @param content
      * @return
