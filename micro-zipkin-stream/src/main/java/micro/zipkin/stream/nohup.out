@@ -1,2 +1,0 @@
-Exception in thread "main" java.lang.IllegalArgumentException: STORAGE_TYPE not set
-	at zipkin2.dependencies.ZipkinDependenciesJob.main(ZipkinDependenciesJob.java:34)

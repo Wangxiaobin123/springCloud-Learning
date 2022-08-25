@@ -1,1 +1,0 @@
-nohup java -jar zipkin.jar --zipkin.collector.rabbitmq.addresses=localhost:5672 --zipkin.collector.rabbitmq.password=guest --zipkin.collector.rabbitmq.username=guest --STORAGE_TYPE=elasticsearch --ES_HOSTS=172.24.5.131:9206 > zipkin.log &
