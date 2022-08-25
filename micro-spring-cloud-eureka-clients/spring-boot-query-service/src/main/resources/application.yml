@@ -1,0 +1,24 @@
+# port
+server:
+  port: 7070
+# env
+spring:
+  profiles:
+    active: idc
+  application:
+    name: service-api
+  rabbitmq:
+    port: 5672
+    username: guest
+    password: guest
+    host: 127.0.0.1
+#  zipkin:
+#    base-url: http://127.0.0.1:9411/
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-1111:1111/eureka/,http://eureka-1112:1112/eureka/,http://eureka-1113:1113/eureka/
+
+
+
+

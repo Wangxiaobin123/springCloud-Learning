@@ -1,0 +1,68 @@
+// by shengbin
+pipeline {
+    agent any
+    environment {
+        def branchName = branch.replaceAll('"','')
+        def envValue = envValue.replaceAll('"','')
+        def BUILDVERSION = sh(script: "echo `date +%s`", returnStdout: true).trim()
+    }
+    tools {
+        maven 'maven'
+    }
+    // agent { dockerfile true }
+    stages {
+        stage('Step0 ----- Start test') {
+            steps {
+                echo 'Hello New World'
+            }
+        }
+        stage('Step1 ----- Prepare') {
+            steps {
+                echo '-----------Prepare finished-----------'
+                sh 'git checkout ${branchName}'
+                sh 'git pull'
+                // sh 'npm install'
+                // sh 'npm install --save canvas-toBlob'
+                sh  'npm run docker:build'
+                sh 'bash stop_node.sh'
+            }
+        }
+        stage('Step2 ======================== start build dev ========================') {
+            when {
+                environment name: 'envValue', value: 'dev'
+            }
+            steps {
+                sh 'docker tag bmf/frontv5:latest bfdharbor.percent.cn/testbmfprd/front-v5-home-page:${BUILDVERSION} '
+                sh 'docker push bfdharbor.percent.cn/testbmfprd/front-v5-home-page:${BUILDVERSION} '
+            }
+        }
+        stage('Step2 ======================== start build production ========================') {
+            when {
+                environment name: 'envValue', value: 'production'
+            }
+            steps {
+                sh 'docker tag bmf/frontv5:latest bfdharbor.percent.cn/mfprd/front-v5-prd:${BUILDVERSION} '
+                sh 'docker push bfdharbor.percent.cn/mfprd/front-v5-prd:${BUILDVERSION}'
+            }
+
+        }
+        stage('Step3 ----- start node') {
+            steps {
+                withEnv(['JENKINS_NODE_COOKIE=background_job']) {
+                    sh "nohup npm start >> nohup.out 2>&1 &"
+                }
+            }
+        }
+        stage('Step4 -------- Deploy') {
+            steps {
+                echo '-----------Deploying-----------'
+            }
+        }
+        stage('Step5 --------- End') {
+            steps {
+                sh 'docker images | grep \'front\' | awk \'{print $3}\' | xargs docker rmi -f'
+                echo 'Bye Success'
+            }
+        }
+    }
+}
